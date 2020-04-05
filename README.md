@@ -17,9 +17,9 @@ A [Polybar](https://github.com/jaagr/polybar) script that shows opened windows o
 [module/polybar-windows]
 type = custom/script
 exec = polybar-windows.sh
-format-prefix = " "
 format = <label>
 label = %output%
+label-padding = 1
 interval = 1
 tail = true
 ```
