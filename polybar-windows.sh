@@ -1,6 +1,6 @@
 #!/bin/sh
 
-active_window=$(xprop -root _NET_ACTIVE_WINDOW | cut -d ' ' -f 5|sed -e 's/../0&/2')
+active_window=$(xprop -root _NET_ACTIVE_WINDOW|cut -d ' ' -f 5|sed -e 's/../0&/2')
 
 current_display=$(wmctrl -d|grep "*"|awk '{print $1}')
 
