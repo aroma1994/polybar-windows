@@ -29,5 +29,4 @@ format = <label>
 label = %output%
 label-padding = 1
 interval = 1
-tail = true
 ```
