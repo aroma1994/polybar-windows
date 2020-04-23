@@ -27,7 +27,10 @@ current_display=$(wmctrl -d|grep "*"|awk '{print $1}')
 #########################
 # Decorated version BEGIN
 #
-active_window_decoration_style_left_side="%{F#a2d1ec}%{+u}%{u#a2d1ec}"
+
+color1="a2d1ec" # Blue
+
+active_window_decoration_style_left_side="%{F#$color1}%{+u}%{u#$color1}"
 active_window_decoration_style_right_side="%{-u}%{F-}"
 
 current_windows=$(wmctrl -lx|awk -v current_display="$current_display" -v active_window="$active_window" -v active_window_decoration_style_left_side="$active_window_decoration_style_left_side" -v active_window_decoration_style_right_side="$active_window_decoration_style_right_side" '
