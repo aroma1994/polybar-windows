@@ -1,4 +1,5 @@
 ![polywins](screenshots/polywins.png)
+![polywins](screenshots/demonstration.gif)
 
 # Script: polywins
 A [Polybar](https://github.com/jaagr/polybar) script forked from [polybar-windows](https://github.com/aroma1994/polybar-windows) with additional features.
@@ -39,5 +40,3 @@ interval = .5
 
 * `xprop`
 * `wmctrl`
-
-![polywins](screenshots/demonstration.gif)
