@@ -39,7 +39,6 @@ case "$1" in
 	;;
 	close)
 		shift
-		wmctrl -ir "$1" -b add,hidden
 		wmctrl -ic "$1"
 		exit
 	;;
