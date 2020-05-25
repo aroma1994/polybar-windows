@@ -59,7 +59,7 @@ if [ -n "$2" ]; then exit; fi
 
 
 # Generating the window list
-window_list=$(wmctrl -lx|awk -vORS="" -vOFS="" \
+window_list=$(wmctrl -lx | awk -vORS="" -vOFS="" \
 	-v active_display="$active_display" \
 	-v active_window="$active_window" \
 	-v active_left="$active_window_left" \
