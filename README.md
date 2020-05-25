@@ -29,8 +29,12 @@ The following variables at the top of the file may be customized:
 | `wm_border_width=0` | Setting this variable might make resizing positions more accurate. |
 
 
-## Module
+## Installing
 
+* Save `polywins.sh`, for example to `~/.config/polybar/scripts`.
+* Make the script executable `chmod +x ~/.config/polybar/scripts/polywins.sh`.
+* Change any setting at the top of the script you wish.
+* Add the following module to your polybar config:
 ```ini
 [module/polywins]
 type = custom/script
@@ -39,6 +43,11 @@ format = <label>
 label = %output%
 label-padding = 1
 interval = .5
+```
+* Add the module to one of your bars, for example like so:
+```ini
+[bar/your_bar_name]
+modules-center = polywins
 ```
 
 ## Dependencies
