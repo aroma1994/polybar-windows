@@ -27,44 +27,35 @@ active_window=$(xprop -root _NET_ACTIVE_WINDOW | awk '{print "0x0"substr($5,3)}'
 # On-click actions
 case "$1" in
 raise_or_minimize)
-	shift
-	if [ "${active_window}" = "${1}" ]; then
-		wmctrl -ir "$1" -b toggle,hidden
+	if [ "${active_window}" = "${2}" ]; then
+		wmctrl -ir "$2" -b toggle,hidden
 	else
-		wmctrl -ia "$1"
+		wmctrl -ia "$2"
 	fi
-	exit
 	;;
 close)
-	shift
-	wmctrl -ic "$1"
-	exit
+	wmctrl -ic "$2"
 	;;
 slop_resize)
-	shift
-	wmctrl -ia "$1"
-	wmctrl -ir "$1" -e "0,$(slop | awk -F'[x+]' '{print $3","$4","$1","$2}')"
-	exit
+	wmctrl -ia "$2"
+	wmctrl -ir "$2" -e "0,$(slop | awk -F'[x+]' '{print $3","$4","$1","$2}')"
 	;;
 increment_size)
-	shift
-	wmctrl -ir "$1" -e "$(wmctrl -G -l | \
+	wmctrl -ir "$2" -e "$(wmctrl -G -l | \
 		awk -v i="$resize_increment" \
 		    -v b="$wm_border_width" \
-		    -v win="$1" \
+		    -v win="$2" \
 		'$1 ~ win {print "0,"$3-b*2-i/2","$4-b*2-i/2","$5+i","$6+i}')"
-	exit
 	;;
 decrement_size)
-	shift
-	wmctrl -ir "$1" -e "$(wmctrl -G -l | \
+	wmctrl -ir "$2" -e "$(wmctrl -G -l | \
 		awk -v i="$resize_increment" \
 		    -v b="$wm_border_width" \
-		    -v win="$1" \
+		    -v win="$2" \
 		'$1 ~ win {print "0,"$3-b*2+i/2","$4-b*2+i/2","$5-i","$6-i}')"
-	exit
 	;;
 esac
+if [ -n "$2" ]; then exit; fi
 
 # Generating the window list
 window_list=$(wmctrl -lx|awk -vORS="" -vOFS="" \
