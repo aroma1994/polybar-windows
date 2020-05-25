@@ -10,10 +10,10 @@ inactive_text_color="#503631"
 inactive_underline="false"
 inactive_underline_color="#F1EF7D"
 separator="·"
-display=window_class # options: window_title, window_class, window_classname
+display="window_class" # options: window_title, window_class, window_classname
 char_limit=20 # useful with window_title
-case=lower # options: normal, upper, lower
-add_spaces=true
+case="normal" # options: normal, upper, lower
+add_spaces="true"
 resize_increment=30
 wm_border_width=0 # setting this might be required for accurate resize position
 

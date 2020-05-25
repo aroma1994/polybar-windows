@@ -21,9 +21,9 @@ The following variables at the top of the file may be customized:
 | ``inactive_underline="false"`` | Whether to underline inactive windows. |
 | ``inactive_underline_color="#F1EF7D"`` | The color of inactive window underline. |
 | `separator="·"` | Character displayed between window names. |
-| `display=window_class` | Choose whether to display window_title, window_class or window_classname. |
-| `case=lower` | Options: normal, upper, lower. |
-| `add_spaces=true` | Whether to add a space to the side of each window name. |
+| `display="window_class"` | Choose whether to display window_title, window_class or window_classname. |
+| `case="normal"` | Options: normal, upper, lower. |
+| `add_spaces="true"` | Whether to add a space to the side of each window name. |
 | `char_limit=20` | Maximum window name length after which it will be truncated. |
 | `resize_increment=30` | Size in pixel of resizing steps for the mouse wheel functions. |
 | `wm_border_width=0` | Setting this variable might make resizing positions more accurate. |
