@@ -57,14 +57,14 @@ slop_resize)
 	wmctrl -ir "$2" -e "$(slop -f 0,%x,%y,%w,%h)"
 	;;
 increment_size)
-	wmctrl -ir "$2" -e "$(wmctrl -G -l | \
+	wmctrl -ir "$2" -e "$(wmctrl -G -l |
 		awk -v i="$resize_increment" \
 		    -v b="$wm_border_width" \
 		    -v win="$2" \
 		'$1 ~ win {print "0,"$3-b*2-i/2","$4-b*2-i/2","$5+i","$6+i}')"
 	;;
 decrement_size)
-	wmctrl -ir "$2" -e "$(wmctrl -G -l | \
+	wmctrl -ir "$2" -e "$(wmctrl -G -l |
 		awk -v i="$resize_increment" \
 		    -v b="$wm_border_width" \
 		    -v win="$2" \
