@@ -99,8 +99,8 @@ window_list=$(wmctrl -lx|awk -vORS="" -vOFS="" \
 			displayed_name = title
 		}
 
-		if      (case == "lower") { displayed_name=tolower(displayed_name) }
-		else if (case == "upper") { displayed_name=toupper(displayed_name) }
+		if      (case == "lower") { displayed_name = tolower(displayed_name) }
+		else if (case == "upper") { displayed_name = toupper(displayed_name) }
 
 		if (length(displayed_name) > char_limit) {
 			displayed_name = substr(displayed_name,1,char_limit)"…"
@@ -108,7 +108,7 @@ window_list=$(wmctrl -lx|awk -vORS="" -vOFS="" \
 
 		if (add_spaces == "true") { displayed_name = " "displayed_name" " }
 
-		if ($1==active_window) {
+		if ($1 == active_window) {
 			displayed_name=active_left displayed_name active_right
 		}
 
