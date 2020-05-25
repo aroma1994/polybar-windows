@@ -3,8 +3,12 @@
 
 # SETTINGS {{{ ---
 
-text_color="#250F0B"
-underline_color="#E7A09E"
+active_text_color="#250F0B"
+active_underline="true"
+active_underline_color="#E7A09E"
+inactive_text_color="#250F0B"
+inactive_underline="false"
+inactive_underline_color="#48FF00"
 separator="·"
 display=window_class # options: window_title, window_class, window_classname
 char_limit=20 # useful with window_title
@@ -18,8 +22,21 @@ wm_border_width=0 # setting this might be required for accurate resize position
 
 
 # Setup
-active_window_left="%{F$text_color}%{+u}%{u$underline_color}"
-active_window_right="%{-u}%{F-}"
+actv_win_left="%{F$active_text_color}"
+actv_win_right="%{F-}"
+inactv_win_left="%{F$inactive_text_color}"
+inactv_win_right="%{F-}"
+
+if [ $active_underline = "true" ]; then
+	actv_win_left="${actv_win_left}%{+u}%{u$active_underline_color}"
+	actv_win_right="%{-u}${actv_win_right}"
+fi
+
+if [ $inactive_underline = "true" ]; then
+	inactv_win_left="${inactv_win_left}%{+u}%{u$inactive_underline_color}"
+	inactv_win_right="%{-u}${inactv_win_right}"
+fi
+
 active_display=$(wmctrl -d | awk '/\*/ {print $1}')
 active_window=$(xprop -root _NET_ACTIVE_WINDOW | awk '{print "0x0"substr($5,3)}')
 
@@ -62,8 +79,10 @@ if [ -n "$2" ]; then exit; fi
 window_list=$(wmctrl -lx | awk -vORS="" -vOFS="" \
 	-v active_display="$active_display" \
 	-v active_window="$active_window" \
-	-v active_left="$active_window_left" \
-	-v active_right="$active_window_right" \
+	-v active_left="$actv_win_left" \
+	-v active_right="$actv_win_right" \
+	-v inactive_left="$inactv_win_left" \
+	-v inactive_right="$inactv_win_right" \
 	-v separator="$separator" \
 	-v display="$display" \
 	-v case="$case" \
@@ -103,6 +122,9 @@ window_list=$(wmctrl -lx | awk -vORS="" -vOFS="" \
 
 	if ($1 == active_window) {
 		displayed_name=active_left displayed_name active_right
+	}
+	else {
+		displayed_name=inactive_left displayed_name inactive_right
 	}
 
 	if (non_first == "") { non_first = "true" } else {

@@ -12,8 +12,12 @@ A [Polybar](https://github.com/jaagr/polybar) script forked from [polybar-window
 ## Configuration
 
 The following variables at the top of the file may be customized:
-* `text_color="#250F0B"`
-* `underline_color="#E7A09E"`
+* ``active_text_color="#250F0B"``
+* ``active_underline="true"``
+* ``active_underline_color="#E7A09E"``
+* ``inactive_text_color="#250F0B"``
+* ``inactive_underline="false"``
+* ``inactive_underline_color="#48FF00"``
 * `separator="·"` Character displayed between window names.
 * `display=window_class` Choose whether to display window_title, window_class or window_classname.
 * `case=lower` Options: normal, upper, lower.
