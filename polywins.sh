@@ -28,8 +28,7 @@ active_window=$(xprop -root _NET_ACTIVE_WINDOW | awk '{print "0x0"substr($5,3)}'
 case "$1" in
 raise_or_minimize)
 	shift
-	clicked=${1}
-	if [ "${active_window}" = "${clicked}" ]; then
+	if [ "${active_window}" = "${1}" ]; then
 		wmctrl -ir "$1" -b toggle,hidden
 	else
 		wmctrl -ia "$1"
@@ -51,8 +50,8 @@ increment_size)
 	shift
 	wmctrl -ir "$1" -e "$(wmctrl -G -l | \
 		awk -v i="$resize_increment" \
-			-v b="$wm_border_width" \
-			-v win="$1" \
+		    -v b="$wm_border_width" \
+		    -v win="$1" \
 		'$1 ~ win {print "0,"$3-b*2-i/2","$4-b*2-i/2","$5+i","$6+i}')"
 	exit
 	;;
