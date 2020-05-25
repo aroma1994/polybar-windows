@@ -80,7 +80,6 @@ window_list=$(wmctrl -lx|awk -vORS="" -vOFS="" \
 	-v char_limit="$char_limit" \
 	-v add_spaces="$add_spaces" \
 	-v on_click="$0" \
-	-v scrollwheel_behavior="$scrollwheel_behavior" \
 	'{
 		if ($2 != active_display && $2 != "-1") { next }
 		if ($3 ~ "polybar" || $3 ~ "yad") { next }
