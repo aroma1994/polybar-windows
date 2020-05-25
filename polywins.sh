@@ -17,10 +17,9 @@ resize_increment=30
 
 
 # Setup
-wm_border_width=0 # setting this might be required for accurate resize position
-active_display=$(wmctrl -d | grep "*" | awk '{print $1}')
-active_window=$(xprop -root _NET_ACTIVE_WINDOW | cut -d ' ' -f 5 | \
-	            sed -e 's/../0&/2')
+wm_border_width=1 # setting this might be required for accurate resize position
+active_display=$(wmctrl -d | awk '/\*/ {print $1}')
+active_window=$(xprop -root _NET_ACTIVE_WINDOW | awk '{print "0x0"substr($5,3)}')
 active_window_left="%{F$text_color}%{+u}%{u$underline_color}"
 active_window_right="%{-u}%{F-}"
 
@@ -50,18 +49,20 @@ case "$1" in
 	;;
 	increment_size)
 		shift
-		wmctrl -ir "$1" -e "$(wmctrl -G -l | grep "$1" | \
+		wmctrl -ir "$1" -e "$(wmctrl -G -l | \
 			awk -v i="$resize_increment" \
 			    -v b="$wm_border_width" \
-			'{print "0,"$3-b*2-i/2","$4-b*2-i/2","$5+i","$6+i}')"
+				-v win="$1" \
+			'$1 ~ win {print "0,"$3-b*2-i/2","$4-b*2-i/2","$5+i","$6+i}')"
 		exit
 	;;
 	decrement_size)
 		shift
-		wmctrl -ir "$1" -e "$(wmctrl -G -l | grep "$1" | \
+		wmctrl -ir "$1" -e "$(wmctrl -G -l | \
 			awk -v i="$resize_increment" \
 				-v b="$wm_border_width" \
-			'{print "0,"$3-b*2+i/2","$4-b*2+i/2","$5-i","$6-i}')"
+				-v win="$1" \
+			'$1 ~ win {print "0,"$3-b*2+i/2","$4-b*2+i/2","$5-i","$6-i}')"
 		exit
 	;;
 	*) ;;
