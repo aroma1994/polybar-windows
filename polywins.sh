@@ -15,7 +15,7 @@ char_limit=20 # useful with window_title
 char_case="normal" # options: normal, upper, lower
 add_spaces="true"
 resize_increment=30
-wm_border_width=1 # setting this might be required for accurate resize position
+wm_border_width=0 # setting this might be required for accurate resize position
 
 # --- }}}
 
