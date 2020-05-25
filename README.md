@@ -8,6 +8,8 @@ A [Polybar](https://github.com/jaagr/polybar) script forked from [polybar-window
 * Right click: Select a rectangle for the window to be re-positioned to.
 * Mouse wheel: Resize the window incrementally.
 
+<sub>For a very limited multihead implementation, check out the [multihead branch](https://github.com/alnj/polywins/tree/multihead)/sub>
+
 
 ## Configuration
 
