@@ -6,13 +6,13 @@
 active_text_color="#250F0B"
 active_underline="true"
 active_underline_color="#E7A09E"
-inactive_text_color="#503631"
+inactive_text_color="#593933"
 inactive_underline="false"
 inactive_underline_color="#F1EF7D"
 separator="·"
 display="window_class" # options: window_title, window_class, window_classname
 char_limit=20 # useful with window_title
-case="normal" # options: normal, upper, lower
+char_case="normal" # options: normal, upper, lower
 add_spaces="true"
 resize_increment=30
 wm_border_width=0 # setting this might be required for accurate resize position
@@ -85,7 +85,7 @@ window_list=$(wmctrl -lx | awk -vORS="" -vOFS="" \
 	-v inactive_right="$inactv_win_right" \
 	-v separator="$separator" \
 	-v display="$display" \
-	-v case="$case" \
+	-v c_case="$char_case" \
 	-v char_limit="$char_limit" \
 	-v add_spaces="$add_spaces" \
 	-v on_click="$0" \
@@ -111,8 +111,8 @@ window_list=$(wmctrl -lx | awk -vORS="" -vOFS="" \
 		displayed_name = title
 	}
 
-	if      (case == "lower") { displayed_name = tolower(displayed_name) }
-	else if (case == "upper") { displayed_name = toupper(displayed_name) }
+	if      (c_case == "lower") { displayed_name = tolower(displayed_name) }
+	else if (c_case == "upper") { displayed_name = toupper(displayed_name) }
 
 	if (length(displayed_name) > char_limit) {
 		displayed_name = substr(displayed_name,1,char_limit)"…"
