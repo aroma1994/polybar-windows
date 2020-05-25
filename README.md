@@ -20,7 +20,7 @@ The following variables at the top of the file may be customized:
 * `add_spaces=true` Whether to add a space to the side of each window name.
 * `char_limit=20` Maximum window name length after which it will be truncated.
 * `resize_increment=30` Size in pixel of resizing steps for the mouse wheel functions.
-* `wm_border_width=0` Setting this variable, located a little further down, might make resizing positions more accurate.
+* `wm_border_width=0` Setting this variable might make resizing positions more accurate.
 
 
 ## Module

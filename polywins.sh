@@ -11,16 +11,15 @@ char_limit=20 # useful with window_title
 case=lower # options: normal, upper, lower
 add_spaces=true
 resize_increment=30
+wm_border_width=0 # setting this might be required for accurate resize position
 
 # --- }}}
 
 
 
 # Setup
-wm_border_width=0 # setting this might be required for accurate resize position
 active_window_left="%{F$text_color}%{+u}%{u$underline_color}"
 active_window_right="%{-u}%{F-}"
-
 active_display=$(wmctrl -d | awk '/\*/ {print $1}')
 active_window=$(xprop -root _NET_ACTIVE_WINDOW | awk '{print "0x0"substr($5,3)}')
 
@@ -55,7 +54,9 @@ decrement_size)
 		'$1 ~ win {print "0,"$3-b*2+i/2","$4-b*2+i/2","$5-i","$6-i}')"
 	;;
 esac
+
 if [ -n "$2" ]; then exit; fi
+
 
 # Generating the window list
 window_list=$(wmctrl -lx|awk -vORS="" -vOFS="" \
