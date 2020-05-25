@@ -123,7 +123,6 @@ window_list=$(wmctrl -lx|awk -vORS="" -vOFS="" \
 		print "%{A5:"on_click" decrement_size "$1":}"
 		print displayed_name
 		print "%{A}%{A}%{A}%{A}%{A}"
-		
 	}')
 
 echo "$window_list"
