@@ -59,8 +59,8 @@ decrement_size)
 	shift
 	wmctrl -ir "$1" -e "$(wmctrl -G -l | \
 		awk -v i="$resize_increment" \
-			-v b="$wm_border_width" \
-			-v win="$1" \
+		    -v b="$wm_border_width" \
+		    -v win="$1" \
 		'$1 ~ win {print "0,"$3-b*2+i/2","$4-b*2+i/2","$5-i","$6-i}')"
 	exit
 	;;
