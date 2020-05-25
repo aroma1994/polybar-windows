@@ -32,8 +32,8 @@ The following variables at the top of the file may be customized:
 ## Installing
 
 * Save `polywins.sh`, for example to `~/.config/polybar/scripts`.
-* Make the script executable `chmod +x ~/.config/polybar/scripts/polywins.sh`.
-* Change any setting at the top of the script you wish.
+* Make the script executable with `chmod +x ~/.config/polybar/scripts/polywins.sh`.
+* Change any setting you wish at the top of the script.
 * Add the following module to your polybar config:
 ```ini
 [module/polywins]

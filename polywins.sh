@@ -6,7 +6,7 @@
 active_text_color="#250F0B"
 active_underline="true"
 active_underline_color="#E7A09E"
-inactive_text_color="#593933"
+inactive_text_color="#250F0B"
 inactive_underline="false"
 inactive_underline_color="#F1EF7D"
 separator="·"
@@ -15,7 +15,7 @@ char_limit=20 # useful with window_title
 char_case="normal" # options: normal, upper, lower
 add_spaces="true"
 resize_increment=30
-wm_border_width=0 # setting this might be required for accurate resize position
+wm_border_width=1 # setting this might be required for accurate resize position
 
 # --- }}}
 
@@ -37,7 +37,7 @@ if [ $inactive_underline = "true" ]; then
 	inactv_win_right="%{-u}${inactv_win_right}"
 fi
 
-active_display=$(wmctrl -d | awk '/\*/ {print $1}')
+active_workspace=$(wmctrl -d | awk '/\*/ {print $1}')
 active_window=$(xprop -root _NET_ACTIVE_WINDOW | awk '{print "0x0"substr($5,3)}')
 
 # On-click actions
@@ -77,7 +77,7 @@ if [ -n "$2" ]; then exit; fi
 
 # Generating the window list
 window_list=$(wmctrl -lx | awk -vORS="" -vOFS="" \
-	-v active_display="$active_display" \
+	-v active_workspace="$active_workspace" \
 	-v active_window="$active_window" \
 	-v active_left="$actv_win_left" \
 	-v active_right="$actv_win_right" \
@@ -90,7 +90,7 @@ window_list=$(wmctrl -lx | awk -vORS="" -vOFS="" \
 	-v add_spaces="$add_spaces" \
 	-v on_click="$0" \
 	'{
-	if ($2 != active_display && $2 != "-1") { next }
+	if ($2 != active_workspace && $2 != "-1") { next }
 	if ($3 ~ "polybar" || $3 ~ "yad") { next }
 
 	if (display == "window_class") {
