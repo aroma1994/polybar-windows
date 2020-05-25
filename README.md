@@ -40,7 +40,7 @@ The following variables at the top of the file may be customized:
 ```ini
 [module/polywins]
 type = custom/script
-exec = ~/.config/polybar/scripts/polywins.sh
+exec = ~/.config/polybar/scripts/polywins.sh 2>/dev/null
 format = <label>
 label = %output%
 label-padding = 1
