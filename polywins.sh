@@ -6,9 +6,9 @@
 active_text_color="#250F0B"
 active_underline="true"
 active_underline_color="#E7A09E"
-inactive_text_color="#250F0B"
+inactive_text_color="#503631"
 inactive_underline="false"
-inactive_underline_color="#48FF00"
+inactive_underline_color="#F1EF7D"
 separator="·"
 display=window_class # options: window_title, window_class, window_classname
 char_limit=20 # useful with window_title
