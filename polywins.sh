@@ -10,7 +10,7 @@ inactive_text_color="#250F0B"
 inactive_underline="false"
 inactive_underline_color="#F1EF7D"
 separator="·"
-display="window_class" # options: window_title, window_class, window_classname
+show="window_class" # options: window_title, window_class, window_classname
 char_limit=20 # useful with window_title
 char_case="normal" # options: normal, upper, lower
 add_spaces="true"
@@ -54,7 +54,7 @@ close)
 	;;
 slop_resize)
 	wmctrl -ia "$2"
-	wmctrl -ir "$2" -e "0,$(slop | awk -F'[x+]' '{print $3","$4","$1","$2}')"
+	wmctrl -ir "$2" -e "$(slop -f 0,%x,%y,%w,%h)"
 	;;
 increment_size)
 	wmctrl -ir "$2" -e "$(wmctrl -G -l | \
@@ -84,7 +84,7 @@ window_list=$(wmctrl -lx | awk -vORS="" -vOFS="" \
 	-v inactive_left="$inactv_win_left" \
 	-v inactive_right="$inactv_win_right" \
 	-v separator="$separator" \
-	-v display="$display" \
+	-v show="$show" \
 	-v c_case="$char_case" \
 	-v char_limit="$char_limit" \
 	-v add_spaces="$add_spaces" \
@@ -93,15 +93,15 @@ window_list=$(wmctrl -lx | awk -vORS="" -vOFS="" \
 	if ($2 != active_workspace && $2 != "-1") { next }
 	if ($3 ~ "polybar" || $3 ~ "yad") { next }
 
-	if (display == "window_class") {
+	if (show == "window_class") {
 		lastitem=split($3,classname_and_class,".")
 		displayed_name = classname_and_class[lastitem]
 	}
-	else if (display == "window_classname") {
+	else if (show == "window_classname") {
 		split($3,classname_and_class,".")
 		displayed_name = classname_and_class[1]
 	}
-	else if (display == "window_title") {
+	else if (show == "window_title") {
 		# format window title from wmctrl output
 		title = ""
 		for (i = 5; i <= NF; i++) {
