@@ -27,6 +27,7 @@ actv_win_left="%{F$active_text_color}"
 actv_win_right="%{F-}"
 inactv_win_left="%{F$inactive_text_color}"
 inactv_win_right="%{F-}"
+separator="%{F$inactive_text_color}$separator%{F-}"
 
 if [ $active_underline = "true" ]; then
 	actv_win_left="${actv_win_left}%{+u}%{u$active_underline_color}"
