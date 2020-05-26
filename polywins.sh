@@ -12,6 +12,7 @@ inactive_underline_color="#F1EF7D"
 separator="·"
 show="window_class" # options: window_title, window_class, window_classname
 char_limit=20 # useful with window_title
+max_windows="15" # maximum number of displayed windows
 char_case="normal" # options: normal, upper, lower
 add_spaces="true"
 resize_increment=30
@@ -89,9 +90,14 @@ window_list=$(wmctrl -lx | awk -vORS="" -vOFS="" \
 	-v char_limit="$char_limit" \
 	-v add_spaces="$add_spaces" \
 	-v on_click="$0" \
+	-v max_windows="$max_windows" \
 	'{
 	if ($2 != active_workspace && $2 != "-1") { next }
 	if ($3 ~ "polybar" || $3 ~ "yad") { next }
+	if (window_count >= max_windows) {
+		hidden_windows++
+		next
+	}
 
 	if (show == "window_class") {
 		lastitem=split($3,classname_and_class,".")
@@ -138,6 +144,9 @@ window_list=$(wmctrl -lx | awk -vORS="" -vOFS="" \
 	print "%{A5:"on_click" decrement_size "$1":}"
 	print displayed_name
 	print "%{A}%{A}%{A}%{A}%{A}"
-	}')
+	window_count++
+	}
+
+	END{ if (hidden_windows>0) { print separator" +"hidden_windows }}')
 
 echo "$window_list"
