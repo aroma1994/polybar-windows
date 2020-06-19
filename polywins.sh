@@ -27,73 +27,66 @@ wm_border_width=1 # setting this might be required for accurate resize position
 
 
 main() {
-	# Print a new window list every time the active window changes
-	# or a window is opened or closed
-	xprop -root -spy _NET_CLIENT_LIST _NET_ACTIVE_WINDOW |
-		while IFS= read _; do
-			generate_window_list
-		done
+	# If no argument passed...
+	if [ -z "$2" ]; then
+		# Print a new window list every time the active window changes
+		# or a window is opened or closed
+		xprop -root -spy _NET_CLIENT_LIST _NET_ACTIVE_WINDOW |
+			while IFS= read _; do
+				generate_window_list
+			done
+
+	# If arguments are passed, perform on-click actions
+	else
+		wbw="$wm_border_width"
+		case "$1" in
+			raise_or_minimize)
+				if [ "$(get_active_wid)" = "$2" ]; then
+					wmctrl -ir "$2" -b toggle,hidden
+				else
+					wmctrl -ia "$2"
+				fi
+				;;
+
+			close)
+				wmctrl -ic "$2"
+				;;
+
+			slop_resize)
+				wmctrl -ia "$2"
+				wmctrl -ir "$2" -e "$(slop -f 0,%x,%y,%w,%h)"
+				;;
+
+			increment_size)
+				while IFS="[ .]" read wid ws wx wy ww wh _; do
+					test "$wid" != "$2" && continue
+					x=$(( wx - wbw*2 - resize_increment/2 ))
+					y=$(( wy - wbw*2 - resize_increment/2 ))
+					w=$(( ww + resize_increment ))
+					h=$(( wh + resize_increment ))
+				done <<-EOF
+				$(wmctrl -lG)
+				EOF
+
+				wmctrl -ir "$2" -e "0,$x,$y,$w,$h"
+				;;
+
+			decrement_size)
+				while IFS="[ .]" read wid ws wx wy ww wh _; do
+					test "$wid" != "$2" && continue
+					x=$(( wx - wbw*2 + resize_increment/2 ))
+					y=$(( wy - wbw*2 + resize_increment/2 ))
+					w=$(( ww - resize_increment ))
+					h=$(( wh - resize_increment ))
+				done <<-EOF
+				$(wmctrl -lG)
+				EOF
+
+				wmctrl -ir "$2" -e "0,$x,$y,$w,$h"
+				;;
+		esac
+	fi
 }
-
-
-# ON-CLICK ACTIONS {{{ ---
-
-get_active_wid() {
-	active_wid=$(xprop -root _NET_ACTIVE_WINDOW)
-	echo 0x0${active_wid#*x}
-}
-
-case "$1" in
-	raise_or_minimize)
-		if [ "$(get_active_wid)" = "$2" ]; then
-			wmctrl -ir "$2" -b toggle,hidden
-		else
-			wmctrl -ia "$2"
-		fi
-		;;
-
-	close)
-		wmctrl -ic "$2"
-		;;
-
-	slop_resize)
-		wmctrl -ia "$2"
-		wmctrl -ir "$2" -e "$(slop -f 0,%x,%y,%w,%h)"
-		;;
-
-	increment_size)
-		while IFS="[ .]" read -r wid ws wx wy ww wh _; do
-			test "$wid" != "$2" && continue
-			x=$(( wx - wm_border_width*2 - resize_increment/2  ))
-			y=$(( wy - wm_border_width*2 - resize_increment/2  ))
-			w=$(( ww + resize_increment ))
-			h=$(( wh + resize_increment ))
-		done <<-EOF
-		$(wmctrl -lG)
-		EOF
-
-		wmctrl -ir "$2" -e "0,$x,$y,$w,$h"
-		;;
-
-	decrement_size)
-		while IFS="[ .]" read -r wid ws wx wy ww wh _; do
-			test "$wid" != "$2" && continue
-			x=$(( wx - wm_border_width*2 + resize_increment/2  ))
-			y=$(( wy - wm_border_width*2 + resize_increment/2  ))
-			w=$(( ww - resize_increment ))
-			h=$(( wh - resize_increment ))
-		done <<-EOF
-		$(wmctrl -lG)
-		EOF
-
-		wmctrl -ir "$2" -e "0,$x,$y,$w,$h"
-		;;
-esac
-
-# Exit without making windowlist if script is called for on-click actions
-if [ -n "$2" ]; then exit; fi
-
-# --- }}}
 
 
 
@@ -124,6 +117,11 @@ if [ -n "$inactive_bg" ]; then
 	inactive_left="${inactive_left}%{B$inactive_bg}"
 	inactive_right="%{B-}${inactive_right}"
 fi
+
+get_active_wid() {
+	active_wid=$(xprop -root _NET_ACTIVE_WINDOW)
+	echo 0x0${active_wid#*x}
+}
 
 get_active_workspace() {
 	wmctrl -d |
@@ -222,6 +220,4 @@ generate_window_list() {
 
 # --- }}}
 
-main
-
-
+main "$@"
