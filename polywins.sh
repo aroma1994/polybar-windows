@@ -38,9 +38,14 @@ main() {
 
 # ON-CLICK ACTIONS {{{ ---
 
+get_active_wid() {
+	active_wid=$(xprop -root _NET_ACTIVE_WINDOW)
+	echo 0x0${active_wid#*x}
+}
+
 case "$1" in
 	raise_or_minimize)
-		if [ "$active_window" = "$2" ]; then
+		if [ "$(get_active_wid)" = "$2" ]; then
 			wmctrl -ir "$2" -b toggle,hidden
 		else
 			wmctrl -ia "$2"
@@ -125,11 +130,6 @@ get_active_workspace() {
 		while IFS="[ .]" read -r number active_status _; do
 			test "$active_status" = "*" && echo "$number" && break
 		done
-}
-
-get_active_wid() {
-	active_wid=$(xprop -root _NET_ACTIVE_WINDOW)
-	echo 0x0${active_wid#*x}
 }
 
 generate_window_list() {
