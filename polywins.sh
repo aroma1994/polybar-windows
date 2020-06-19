@@ -25,35 +25,18 @@ wm_border_width=1 # setting this might be required for accurate resize position
 # --- }}}
 
 
+main() {
+	# Print a new window list every time the active window changes
+	# or a window is opened or closed
+	xprop -root -spy _NET_CLIENT_LIST _NET_ACTIVE_WINDOW |
+		while IFS= read _; do
+			generate_window_list
+		done
+}
 
-# Setup
-active_left="%{F$active_text_color}"
-active_right="%{F-}"
-inactive_left="%{F$inactive_text_color}"
-inactive_right="%{F-}"
-separator="%{F$inactive_text_color}$separator%{F-}"
 
-if [ -n "$active_underline" ]; then
-	active_left="${active_left}%{+u}%{u$active_underline}"
-	active_right="%{-u}${active_right}"
-fi
+# ON-CLICK ACTIONS {{{ ---
 
-if [ -n "$active_bg" ]; then
-	active_left="${active_left}%{B$active_bg}"
-	active_right="%{B-}${active_right}"
-fi
-
-if [ -n "$inactive_underline" ]; then
-	inactive_left="${inactive_left}%{+u}%{u$inactive_underline}"
-	inactive_right="%{-u}${inactive_right}"
-fi
-
-if [ -n "$inactive_bg" ]; then
-	inactive_left="${inactive_left}%{B$inactive_bg}"
-	inactive_right="%{B-}${inactive_right}"
-fi
-
-# On-click actions
 case "$1" in
 	raise_or_minimize)
 		if [ "$active_window" = "$2" ]; then
@@ -104,6 +87,37 @@ esac
 # Exit without making windowlist if script is called for on-click actions
 if [ -n "$2" ]; then exit; fi
 
+# --- }}}
+
+
+
+# SETUP {{{ ---
+
+active_left="%{F$active_text_color}"
+active_right="%{F-}"
+inactive_left="%{F$inactive_text_color}"
+inactive_right="%{F-}"
+separator="%{F$inactive_text_color}$separator%{F-}"
+
+if [ -n "$active_underline" ]; then
+	active_left="${active_left}%{+u}%{u$active_underline}"
+	active_right="%{-u}${active_right}"
+fi
+
+if [ -n "$active_bg" ]; then
+	active_left="${active_left}%{B$active_bg}"
+	active_right="%{B-}${active_right}"
+fi
+
+if [ -n "$inactive_underline" ]; then
+	inactive_left="${inactive_left}%{+u}%{u$inactive_underline}"
+	inactive_right="%{-u}${inactive_right}"
+fi
+
+if [ -n "$inactive_bg" ]; then
+	inactive_left="${inactive_left}%{B$inactive_bg}"
+	inactive_right="%{B-}${inactive_right}"
+fi
 
 get_active_workspace() {
 	wmctrl -d |
@@ -200,11 +214,8 @@ generate_window_list() {
 	fi
 }
 
-# Print a new window list every time the active window changes or a window
-# is opened or closed
-xprop -root -spy _NET_CLIENT_LIST _NET_ACTIVE_WINDOW | while IFS= read _; do
-	generate_window_list
-done
+# --- }}}
 
+main
 
 
