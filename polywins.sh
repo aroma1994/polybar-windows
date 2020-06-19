@@ -14,6 +14,7 @@ inactive_underline=
 separator="·"
 show="window_class" # options: window_title, window_class, window_classname
 forbidden_classes="Polybar Conky Gmrun"
+empty_desktop_message="Desktop"
 
 char_limit=20
 max_windows=15
@@ -211,6 +212,11 @@ generate_window_list() {
 	# Print number of hidden windows
 	if [ "$window_count" -gt "$max_windows" ]; then
 		printf "%s" "+$(( window_count - max_windows ))"
+	fi
+
+	# Print empty desktop message if no windows are open
+	if [ "$window_count" = 0 ]; then
+		printf "%s" "$empty_desktop_message"
 	fi
 }
 
