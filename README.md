@@ -24,6 +24,7 @@ The following variables at the top of the file may be customized:
 | `separator="·"` | String displayed between window names. |
 | `show="window_class"` | Whether to display window_title, window_class or window_classname. |
 | `forbidden_classes="Polybar Conky Gmrun"` | Window classes that you do not wish to appear in the window list. |
+| `empty_desktop_message="Desktop"` | String to display if no window is open. |
 | `case="normal"` | normal, upper, lower. |
 | `char_limit=20` | Maximum window name length after which it will be truncated. |
 | ``max_windows=15`` | Maximum number of displayed windows. Useful if you have limited space. Will show how many windows are hidden. (e.g. `+3`)|
