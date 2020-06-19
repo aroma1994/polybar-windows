@@ -29,68 +29,74 @@ wm_border_width=1 # setting this might be required for accurate resize position
 main() {
 	# If no argument passed...
 	if [ -z "$2" ]; then
-		# Print a new window list every time the active window changes
-		# or a window is opened or closed
+		# ...print new window list every time
+		# the active window changes or
+		# a window is opened or closed
 		xprop -root -spy _NET_CLIENT_LIST _NET_ACTIVE_WINDOW |
 			while IFS= read _; do
 				generate_window_list
 			done
 
-	# If arguments are passed, perform on-click actions
+	# If arguments are passed, run requested on-click function
 	else
-		wbw="$wm_border_width"
-		case "$1" in
-			raise_or_minimize)
-				if [ "$(get_active_wid)" = "$2" ]; then
-					wmctrl -ir "$2" -b toggle,hidden
-				else
-					wmctrl -ia "$2"
-				fi
-				;;
-
-			close)
-				wmctrl -ic "$2"
-				;;
-
-			slop_resize)
-				wmctrl -ia "$2"
-				wmctrl -ir "$2" -e "$(slop -f 0,%x,%y,%w,%h)"
-				;;
-
-			increment_size)
-				while IFS="[ .]" read wid ws wx wy ww wh _; do
-					test "$wid" != "$2" && continue
-					x=$(( wx - wbw*2 - resize_increment/2 ))
-					y=$(( wy - wbw*2 - resize_increment/2 ))
-					w=$(( ww + resize_increment ))
-					h=$(( wh + resize_increment ))
-				done <<-EOF
-				$(wmctrl -lG)
-				EOF
-
-				wmctrl -ir "$2" -e "0,$x,$y,$w,$h"
-				;;
-
-			decrement_size)
-				while IFS="[ .]" read wid ws wx wy ww wh _; do
-					test "$wid" != "$2" && continue
-					x=$(( wx - wbw*2 + resize_increment/2 ))
-					y=$(( wy - wbw*2 + resize_increment/2 ))
-					w=$(( ww - resize_increment ))
-					h=$(( wh - resize_increment ))
-				done <<-EOF
-				$(wmctrl -lG)
-				EOF
-
-				wmctrl -ir "$2" -e "0,$x,$y,$w,$h"
-				;;
-		esac
+		"$@"
 	fi
 }
 
 
 
-# SETUP {{{ ---
+# ON-CLICK FUNCTIONS {{{ ---
+
+raise_or_minimize() {
+	if [ "$(get_active_wid)" = "$1" ]; then
+		wmctrl -ir "$1" -b toggle,hidden
+	else
+		wmctrl -ia "$1"
+	fi
+}
+
+close() {
+	wmctrl -ic "$1"
+}
+
+slop_resize() {
+	wmctrl -ia "$1"
+	wmctrl -ir "$1" -e "$(slop -f 0,%x,%y,%w,%h)"
+}
+
+increment_size() {
+	while IFS="[ .]" read wid ws wx wy ww wh _; do
+		test "$wid" != "$1" && continue
+		x=$(( wx - wm_border_width * 2 - resize_increment / 2 ))
+		y=$(( wy - wm_border_width * 2 - resize_increment / 2 ))
+		w=$(( ww + resize_increment ))
+		h=$(( wh + resize_increment ))
+	done <<-EOF
+	$(wmctrl -lG)
+	EOF
+
+	wmctrl -ir "$1" -e "0,$x,$y,$w,$h"
+}
+
+decrement_size() {
+	while IFS="[ .]" read wid ws wx wy ww wh _; do
+		test "$wid" != "$1" && continue
+		x=$(( wx - wm_border_width * 2 + resize_increment / 2 ))
+		y=$(( wy - wm_border_width * 2 + resize_increment / 2 ))
+		w=$(( ww - resize_increment ))
+		h=$(( wh - resize_increment ))
+	done <<-EOF
+	$(wmctrl -lG)
+	EOF
+
+	wmctrl -ir "$1" -e "0,$x,$y,$w,$h"
+}
+
+# --- }}}
+
+
+
+# WINDOW LIST SETUP {{{ ---
 
 active_left="%{F$active_text_color}"
 active_right="%{F-}"
