@@ -25,7 +25,7 @@ The following variables at the top of the file may be customized:
 | `separator="·"` | Character displayed between window names. |
 | `display="window_class"` | Choose whether to display window_title, window_class or window_classname. |
 | `case="normal"` | Options: normal, upper, lower. |
-| ``max_windows="15"`` | Maximum number of displayed windows. Useful if you have limited space. Will show how many windows are hidden. (e.g. `+3`)|
+| ``max_windows=15`` | Maximum number of displayed windows. Useful if you have limited space. Will show how many windows are hidden. (e.g. `+3`)|
 | `add_spaces="true"` | Whether to add a space to the side of each window name. |
 | `char_limit=20` | Maximum window name length after which it will be truncated. |
 | `resize_increment=30` | Size in pixel of resizing steps for the mouse wheel functions. |
@@ -34,6 +34,7 @@ The following variables at the top of the file may be customized:
 
 ## Installing
 
+* Install `wmctrl`, it should be packaged by most distros. For example on Ubuntu and Debian-based distros, `sudo apt install wmctrl`
 * Save `polywins.sh`, for example to `~/.config/polybar/scripts`.
 * Make the script executable with `chmod +x ~/.config/polybar/scripts/polywins.sh`.
 * Change any setting you wish at the top of the script.
