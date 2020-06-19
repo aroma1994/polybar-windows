@@ -147,7 +147,7 @@ generate_window_list() {
 			*$cls*) continue ;;
 		esac
 
-		# If max number of windows reach, just increment
+		# If max number of windows reached, just increment
 		# the windows counter
 		if [ "$window_count" -ge "$max_windows" ]; then
 			window_count=$(( window_count + 1 ))
