@@ -142,13 +142,16 @@ generate_window_list() {
 	window_count=0
 	on_click="$0"
 	echo ""
+	# Format each window name one by one
+	# Space and . are both used as IFS,
+	# because classname and class are separated by '.'
 	while IFS="[ .\.]" read -r wid ws cname cls host title; do
-		# Don't show windows on another workspace (-1 = sticky)
+		# Don't show the window if on another workspace (-1 = sticky)
 		if [ "$ws" != "$active_workspace" ] && [ "$ws" != "-1" ]; then
 			continue
 		fi
 
-		# Don't show forbidden classes
+		# Don't show the window if its class is forbidden
 		case "$forbidden_classes" in
 			*$cls*) continue ;;
 		esac
@@ -194,7 +197,7 @@ generate_window_list() {
 			w_name="${inactive_left}${w_name}${inactive_right}"
 		fi
 
-		# Add separator before all items except for the first
+		# Add separator unless the window is first in list
 		if [ "$window_count" != 0 ]; then
 			printf "%s" "$separator"
 		fi
@@ -205,6 +208,7 @@ generate_window_list() {
 		printf "%s" "%{A3:$on_click slop_resize $wid:}"
 		printf "%s" "%{A4:$on_click increment_size $wid:}"
 		printf "%s" "%{A5:$on_click decrement_size $wid:}"
+		# Print the final window name
 		printf "%s" "$w_name"
 		printf "%s" "%{A}%{A}%{A}%{A}%{A}"
 
@@ -213,7 +217,8 @@ generate_window_list() {
 	$(wmctrl -lx)
 	EOF
 
-	# Print number of hidden windows
+	# After printing all the windows,
+	# print number of hidden windows
 	if [ "$window_count" -gt "$max_windows" ]; then
 		printf "%s" "+$(( window_count - max_windows ))"
 	fi
