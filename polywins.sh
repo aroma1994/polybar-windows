@@ -33,7 +33,7 @@ main() {
 		# the active window changes or
 		# a window is opened or closed
 		xprop -root -spy _NET_CLIENT_LIST _NET_ACTIVE_WINDOW |
-			while IFS= read _; do
+			while IFS= read -r _; do
 				generate_window_list
 			done
 
@@ -65,7 +65,7 @@ slop_resize() {
 }
 
 increment_size() {
-	while IFS="[ .]" read wid ws wx wy ww wh _; do
+	while IFS="[ .]" read -r wid ws wx wy ww wh _; do
 		test "$wid" != "$1" && continue
 		x=$(( wx - wm_border_width * 2 - resize_increment / 2 ))
 		y=$(( wy - wm_border_width * 2 - resize_increment / 2 ))
@@ -79,7 +79,7 @@ increment_size() {
 }
 
 decrement_size() {
-	while IFS="[ .]" read wid ws wx wy ww wh _; do
+	while IFS="[ .]" read -r wid ws wx wy ww wh _; do
 		test "$wid" != "$1" && continue
 		x=$(( wx - wm_border_width * 2 + resize_increment / 2 ))
 		y=$(( wy - wm_border_width * 2 + resize_increment / 2 ))
@@ -126,7 +126,7 @@ fi
 
 get_active_wid() {
 	active_wid=$(xprop -root _NET_ACTIVE_WINDOW)
-	echo 0x0${active_wid#*x}
+	echo "0x0${active_wid#*x}"
 }
 
 get_active_workspace() {
