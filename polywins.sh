@@ -126,7 +126,11 @@ fi
 
 get_active_wid() {
 	active_wid=$(xprop -root _NET_ACTIVE_WINDOW)
-	echo "0x0${active_wid#*x}"
+	active_wid="${active_wid#*\# }"
+	while [ ${#active_wid} -lt 10 ]; do
+		active_wid="0x0${active_wid#*x}"
+	done
+	echo "$active_wid"
 }
 
 get_active_workspace() {
