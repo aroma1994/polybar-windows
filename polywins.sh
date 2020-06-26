@@ -145,7 +145,7 @@ generate_window_list() {
 	active_wid=$(get_active_wid)
 	window_count=0
 	on_click="$0"
-	echo ""
+
 	# Format each window name one by one
 	# Space and . are both used as IFS,
 	# because classname and class are separated by '.'
@@ -231,6 +231,9 @@ generate_window_list() {
 	if [ "$window_count" = 0 ]; then
 		printf "%s" "$empty_desktop_message"
 	fi
+	
+	# Print newline
+	echo ""
 }
 
 # --- }}}
