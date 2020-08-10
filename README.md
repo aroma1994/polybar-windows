@@ -49,10 +49,11 @@ label = %output%
 label-padding = 1
 tail = true
 ```
-* Add the module to one of your bars, for example like so:
+* Add the module to one of your bars, and don't forget to set a line-size if you intend to use underline, for example like so:
 ```ini
 [bar/your_bar_name]
 modules-center = polywins
+line-size = 2
 ```
 
 ## Dependencies
