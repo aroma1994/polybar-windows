@@ -10,6 +10,8 @@ Decorated version:
 
 ![polybar-windows](screenshots/polybar-windows-decorated.png)
 
+I recommend to look at repository [Polywins](https://github.com/alnj/polywins), which is much more cool and configurable version of this taskbar.
+
 ## Dependencies
 
 * `xprop`
