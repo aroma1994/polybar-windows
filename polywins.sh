@@ -16,7 +16,7 @@ show="window_class" # options: window_title, window_class, window_classname
 forbidden_classes="Polybar Conky Gmrun"
 empty_desktop_message="Desktop"
 
-char_limit=20
+char_limit=10
 max_windows=15
 char_case="normal" # normal, upper, lower
 add_spaces="true"
