@@ -19,7 +19,11 @@ current_display=$(wmctrl -d|grep "*"|awk '{print $1}')
 #
 #		split($3,window_title,".")
 #
-#		print "%{A1: wmctrl -ia "$1" & disown:}"window_title[1]"%{A}"
+#		if (window_title[1] != "polybar") {
+#
+#			print "%{A1: wmctrl -ia "$1" & disown:}"window_title[1]"%{A}"
+#
+#		}
 #
 #		}
 #
@@ -48,7 +52,11 @@ current_windows=$(wmctrl -lx|awk -v current_display="$current_display" -v active
 
 			}
 
-		print "%{A1: wmctrl -ia "$1" & disown:}"window_title[1]"%{A}"
+		if (window_title[1] != "polybar") {
+
+			print "%{A1: wmctrl -ia "$1" & disown:}"window_title[1]"%{A}"
+
+		}
 
 		}
 
